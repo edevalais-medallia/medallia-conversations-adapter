@@ -47,7 +47,7 @@ function buildBody(senderId, pageId, inBody, type = 'message') {
 
 async function getAuthorization(authSettings) {
   let authzVal = null;
-  if (authSettings && authSettings.authTypeInbound === 'Oauth2') {
+  if (authSettings && authSettings.authTypeInbound === 'OAuth') {
     console.log('getting access token');
     const token = await oauthClient.getAccessToken(authSettings);
     authzVal = `Bearer ${token}`;
@@ -77,25 +77,6 @@ function convoApiFactory(url, pageId, authSettings, dependencies) {
   const got = dependencies.got.extend({
     headers: {
       'content-type': 'application/json'
-    },
-    hooks: {
-      // Next hook will generate and add a valid signature to every
-      beforeRequest: [
-        (options) => {
-          if (authSettings.authType === 'Signature' && options.body) {
-            const signature = generateSignature(options.body, authSettings.secret);
-            const updatedOptions = {
-              headers: {
-                ...options.headers,
-                'X-Hub-Signature': signature
-              }
-            };
-            // eslint-disable-next-line no-param-reassign
-            options.headers = updatedOptions.headers;
-            console.log('Updated request headers to ', options.headers);
-          }
-        }
-      ]
     }
   });
 

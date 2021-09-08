@@ -1,18 +1,15 @@
 module.exports = {
 
-  // authTypeInbound can be 'OAuth2' or 'Signature'
-  authTypeInbound: process.env.AUTH_TYPE_INBOUND,
   //OAuth config for inbound
   oauthConfig: {
-    tokenUrl: process.env.CONVO_INSTANCE_URL
-        || `${process.env.CONVO_WEBHOOK_URL && new URL(process.env.CONVO_WEBHOOK_URL).origin}/oauth/token`,
+    tokenUrl: `${process.env.CONVO_API_GATEWAY}/oauth/token`,
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
   },
   //for authTypeInbound Signature
   secret: process.env.SHARED_SECRET,
 
-  // authType can be 'OAuth2' or 'API-Token'
+  // authType can be 'OAuth' or 'API-Token'
   authTypeOutbound: process.env.AUTH_TYPE_OUTBOUND,
 
   // for outbound request API-Token verification (i.e. requests coming from MC)
