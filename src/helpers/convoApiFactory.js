@@ -47,11 +47,10 @@ function buildBody(senderId, pageId, inBody, type = 'message') {
 
 async function getAuthorization(authSettings) {
   let authzVal = null;
-  if (authSettings && authSettings.authTypeInbound === 'OAuth') {
-    console.log('getting access token');
-    const token = await oauthClient.getAccessToken(authSettings);
-    authzVal = `Bearer ${token}`;
-  }
+  console.log('getting access token');
+  const token = await oauthClient.getAccessToken(authSettings);
+  authzVal = `Bearer ${token}`;
+  
   return authzVal;
 }
 

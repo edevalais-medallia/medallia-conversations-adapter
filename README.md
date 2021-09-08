@@ -21,7 +21,7 @@ sequence of commands:
 
 1. `git clone <where ever we host the skeleton>`
 2. Set environment variable
-    * `export CONVO_API_GATEWAY=https://<MEDALLIA_CONVERSATIONS_HOST>/`
+    * `export CONVO_API_GATEWAY=https://<MEDALLIA_CONVERSATIONS_HOST>`
     * `export CHANNEL_GUID=<Channel GUID>`
       1. For communicating from the channel adapter to Medallia Conversations,
         * `export CLIENT_ID=<CLIENT ID for OAuth>` 

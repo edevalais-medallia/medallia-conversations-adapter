@@ -25,7 +25,7 @@ router.post(oauthServer.tokenPath, staticAuth, (req, res) => {
     const { auth } = req;
     if (auth.user) cache.put(token, auth.user);
     console.info(`Issued new access token: ${token} for client ${auth.user || 'unknown'}`);
-    res.status(200).send({ access_token: token, expires_in: 3600 });
+    res.status(200).send({ access_token: token, expires_in: 30 }); //TODO: change expire time to 3600
   }
 });
 
