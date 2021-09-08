@@ -13,7 +13,6 @@ router.post('/me/messages', (req, res) => {
   })}`);
 
   const authz = req.get('Authorization');
-  console.log('Authorization header value = ', authz);
   let valid = false;
   if (authz && authz.startsWith('Bearer')) {
     const token = authz.split(' ')[1];

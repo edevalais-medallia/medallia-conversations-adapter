@@ -23,12 +23,13 @@ sequence of commands:
 2. Set environment variable
     * `export CONVO_API_GATEWAY=https://<MEDALLIA_CONVERSATIONS_HOST>`
     * `export CHANNEL_GUID=<Channel GUID>`
+    * `export DEFAULT_OAUTH_EXPIRES_SECS=<OAuth expiration time in sec>`
       1. For communicating from the channel adapter to Medallia Conversations,
         * `export CLIENT_ID=<CLIENT ID for OAuth>` 
-        * `export CLIENT_SECRET=<Secret for OAuth>` 
+        * `export CLIENT_SECRET=<Secret for OAuth>`
       2. For communicating from Medallia Conversations to the channel adapter,
         * `export AUTH_TYPE_OUTBOUND=<It can be 'OAuth' or 'API-Token'>`
-        * `export ACCESS_TOKEN=<STRING that is configured in the channel only for API-Token auth type>`
+        * `export ACCESS_TOKEN=<STRING that is configured in the channel only for API-Token authentication type>`
 3. `npm install`
 4. `npm start`
 
@@ -38,27 +39,31 @@ This will start a service on port 1338.
 
 For communicating from the channel adapter to Medallia Conversations,
 * OAuth: It will use the Conversations OAuth server. 
-You will need the following configuration CONVO_API_GATEWAY, CLIENT_ID and CLIENT_SECRET.
-  * CLIENT_ID: Client ID from Conversations
-  * CLIENT_SECRET: Client secret from Conversations
+You will need the following configuration CLIENT_ID and CLIENT_SECRET environment variables
+matching the ones from the Conversations Channel configuration,
+  * Client ID: Client ID from Conversations for OAuth
+  * Client secret: Client secret from Conversations for OAuth
 
-For communicating from Medallia Conversations to the channel adapter,
+For communicating from Medallia Conversations to the channel adapter
+set the AUTH_TYPE_OUTBOUND to one of the following options,
 * API-Token: This method will validate the header/query Token conversations sends against the ACCESS_TOKEN.
 * OAuth: Authenticates with the client's OAuth 2.0 server using a client credentials grant.
-  The following configuration is needed on the Conversation SIDEEE TODFOOOOOOO
+Complete these configurations in the Conversations channel with the default values
   * OAuth server URL: http://<ADAPTER_HOST>:1338/token
   * Client ID: ConversationsClient
   * Client secret: S3cr3t123!
 
-All this configurations from the selected methods should match the Conversation's channel Auth settings.
-
 ### Docker
 
-On the Docker host system, run the following sequence of commands:
-
+On the Docker host system, run the following sequence of commands,
 1. Edit [Dockerfile](Dockerfile):
-    * Change `<32_CHARACTER_STRING>` to a 32 character string.
     * Change `<MEDALLIA_CONVERSATIONS_HOST>` to your Medallia Conversations host.
+    * Change `<CHANNEL_GUID>` to your Medallia Conversations channel GUID.
+    * Change `<CLIENT_ID>` to your Medallia Conversations channel client ID.
+    * Change `<CLIENT_SECRET>` to your Medallia Conversations channel secret.
+    * Change `<AUTH_TYPE_OUTBOUND>` to 'API-Token' or 'OAuth'.
+    * Change `<ACCESS_TOKEN>` to your token if you are using API-Token.
+    * Change `<DEFAULT_OAUTH_EXPIRES_SECS>` to the default OAuth Expire time in secs.
 2. `docker build -t skeleton .`
 3. `docker run -p 1338:1338  -t skeleton`
 
